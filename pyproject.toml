@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "features_creation"
 version = "0.1.0"
-description = "Creates new DataFrame columns by applying strategically selected operations."
+description = "Automatically generate meaningful features for your DataFrame, intelligently selecting the most relevant ones."
 authors = ["Andrés Di Giovanni <andresdigiovanni@gmail.com>"]
 readme = "README.md"
 license = "MIT"

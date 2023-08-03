@@ -1,25 +1,24 @@
 # FeaturesCreation
 
-Efficiently creates new DataFrame columns by applying strategically selected operations, optimizing result relevance and significance. It offers a wide range of functions, intelligent operation selection, and seamless integration with popular data analysis libraries, empowering users to enhance data manipulation effortlessly.
+Automatically generate meaningful features for your DataFrame, intelligently selecting the most relevant ones.
+
+[![PyPI Latest Release](https://img.shields.io/pypi/v/features-creation.svg)](https://pypi.org/project/features-creation/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/features-creation.svg?label=PyPI%20downloads)](https://pypi.org/project/features-creation/)
 
 
 # How it works: Transformation Process
 
-The FeaturesCreation library offers a powerful transformation process that allows users to efficiently create new DataFrame columns with strategically selected operations.
-
 1. Instantiation and Fitting:
 
-First, you need to instantiate the FeaturesCreation class and specify the classifier you want to use for selecting operations. For example, fe_cr = FeaturesCreation().
-
-Then, you fit the FeaturesCreation instance to your data by calling fe_cr.fit(x, y, classifier, n_new_features), where x represents the feature data (input), y is the target column (output), classifier is the chosen classifier (e.g., LGBMClassifier), and n_new_features is the desired number of new features to create.
+Instantiate the FeaturesCreation class and fit it to your data by calling fe_cr.fit(x, y, classifier, n_new_features), where x is the feature data, y is the target column, classifier is the chosen classifier (e.g., LGBMClassifier), and n_new_features is the desired number of new features.
 
 2. Transformation Selection:
 
-During the fitting process, the FeaturesCreation class intelligently selects the most relevant and significant transformations to apply to the data. It leverages the provided classifier to evaluate the importance of each potential transformation and selects the top operations that yield the best results.
+The FeaturesCreation class intelligently selects the most relevant transformations by leveraging the provided classifier. It chooses the top operations that yield the best results.
 
 3. Application of Transformations:
 
-After fitting, the selected transformations are ready to be applied to the original DataFrame. To apply these transformations, call fe_cr.apply_transformation(df, transformations), where df is the original DataFrame, and transformations contains the chosen operations.
+Apply the selected transformations to the original DataFrame by calling fe_cr.apply_transformation(df, transformations), where df is the original DataFrame, and transformations contains the chosen operations.
 
 4. Resulting DataFrame:
 
