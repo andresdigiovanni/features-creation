@@ -9,6 +9,8 @@ from .base_transformations import Transformations
 class BinsTransformations(Transformations):
     _ops = ["cut", "qcut"]
     _bins = [2, 3, 5, 8, 13]  # default bins to check
+    _min_bins = 2
+    _max_bins = 20
 
     def generate_transformations(self, df, columns):
         transformations = {}
@@ -24,7 +26,7 @@ class BinsTransformations(Transformations):
                 ]
 
                 bins = list(set(self._bins + n_bins_automatic + n_bins_optimizated))
-                bins = [x for x in bins if x > 1]
+                bins = [x for x in bins if self._min_bins <= x <= self._max_bins]
 
                 for n_bins in bins:
                     col_name = f"{columns[i_1]}__{op}_{n_bins}"
@@ -58,6 +60,10 @@ class BinsTransformations(Transformations):
 
     def _calculate_freedman_diaconis_rule_number_of_bins(self, column):
         iqr = np.percentile(column, 75) - np.percentile(column, 25)
+
+        if iqr == 0:
+            return 0
+
         bin_width_fd = 2 * iqr / np.cbrt(len(column))
         n_bins = (column.max() - column.min()) / bin_width_fd
 
@@ -80,12 +86,9 @@ class BinsTransformations(Transformations):
         return int(n_bins)
 
     def _calculate_optimizated_number_of_bins(self, column, op):
-        min_bins = 2
-        max_bins = 20
-
         result = minimize_scalar(
             lambda num_bins: self._variance_of_bins(column, op, int(num_bins)),
-            bounds=(min_bins, max_bins),
+            bounds=(self._min_bins, self._max_bins),
             method="bounded",
         )
 
@@ -116,4 +119,6 @@ class BinsTransformations(Transformations):
         column_transformed = pd.cut(
             df[column_name], bins=intervals, labels=range(len(intervals) - 1)
         )
+
+        column_transformed = column_transformed.astype(float)
         return column_transformed
