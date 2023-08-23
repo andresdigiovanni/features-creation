@@ -116,7 +116,11 @@ class FeaturesCreation:
             )
             list_columns.append(k)
 
-        new_df = pd.concat(list_transformations, axis=1)
+        new_df = (
+            pd.concat(list_transformations, axis=1)
+            if list_transformations
+            else pd.DataFrame()
+        )
         new_df.columns = list_columns
         new_df.index = df.index
 
